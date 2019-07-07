@@ -1,0 +1,34 @@
+
+---
+version: '2'
+services:
+  mariadb-orders:
+    image: 'bitnami/mariadb:10.1'
+    container_name: mariadb-orders
+    hostname: mariadb-orders
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MARIADB_ROOT_PASSWORD: 'P@ssw0rd'
+      MARIADB_DATABASE: ORDERS_DATABASE
+      MARIADB_USER: axon
+      MARIADB_PASSWORD: axon
+    volumes:
+      - ./data/mariadb-persistence/orders:/var/lib/mysql
+
+  mariadb-products:
+    image: 'bitnami/mariadb:10.1'
+    container_name: mariadb-products
+    hostname: mariadb-products
+    restart: always
+    ports:
+      - '3307:3307'
+    environment:
+      MARIADB_ROOT_PASSWORD: 'P@ssw0rd'
+      MARIADB_DATABASE: PRODUCTS_DATABASE
+      MARIADB_USER: axon
+      MARIADB_PASSWORD: axon
+      MARIADB_PORT_NUMBER: 3307
+    volumes:
+      - ./data/mariadb-persistence/products:/var/lib/mysql

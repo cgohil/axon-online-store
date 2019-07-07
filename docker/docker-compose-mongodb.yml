@@ -1,0 +1,32 @@
+
+---
+version: '2'
+services:
+  mongodb:
+    image: 'bitnami/mongodb:4.1'
+    container_name: mongodb
+    hostname: mongodb
+    ports:
+      - '27017:27017'
+    restart: always
+    environment:
+      MONGODB_ROOT_PASSWORD: 'P@ssw0rd'
+      MONGODB_USERNAME: 'axon'
+      MONGODB_PASSWORD: 'axon'
+      MONGODB_DATABASE: 'axonframework'
+      MONGODB_SYSTEM_LOG_VERBOSITY: 0
+    volumes:
+      - ./data/mongodb:/bitnami
+
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+    container_name: mongoclient
+    hostname: mongoclient
+    depends_on:
+      - mongodb
+    environment:
+      MONGOCLIENT_AUTH: "true"
+      MONGOCLIENT_USERNAME: eventstore
+      MONGOCLIENT_PASSWORD: eventstore
+    ports:
+      - 3300:3000

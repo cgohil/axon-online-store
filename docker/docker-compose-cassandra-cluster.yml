@@ -1,0 +1,52 @@
+
+---
+version: '2'
+services:
+  cassandra-ds1-node1:
+    image: 'bitnami/cassandra:latest'
+    environment:
+      - CASSANDRA_CLUSTER_NAME: MULTI_DS_CASSANDRA_CLUSTER
+      - CASSANDRA_DATACENTER: DS1
+      - CASSANDRA_RACK: RACK1
+      - CASSANDRA_HOST: cass-ds1-node1
+  cassandra-ds1-node2:
+    image: 'bitnami/cassandra:latest'
+    environment:
+      - CASSANDRA_CLUSTER_NAME: MULTI_DS_CASSANDRA_CLUSTER
+      - CASSANDRA_DATACENTER: DS1
+      - CASSANDRA_RACK: RACK1
+      - CASSANDRA_HOST: cass-ds1-node2
+  cassandra-ds1-node3:
+    image: 'bitnami/cassandra:latest'
+    environment:
+      - CASSANDRA_CLUSTER_NAME: MULTI_DS_CASSANDRA_CLUSTER
+      - CASSANDRA_DATACENTER: DS1
+      - CASSANDRA_RACK: RACK2
+      - CASSANDRA_HOST: cass-ds1-node3
+  cassandra-ds2-node1:
+    image: 'bitnami/cassandra:latest'
+    environment:
+      - CASSANDRA_CLUSTER_NAME: MULTI_DS_CASSANDRA_CLUSTER
+      - CASSANDRA_DATACENTER: DS2
+      - CASSANDRA_RACK: RACK1
+      - CASSANDRA_HOST: cass-ds2-node1
+  cassandra-ds2-node2:
+    image: 'bitnami/cassandra:latest'
+    environment:
+      - CASSANDRA_CLUSTER_NAME: MULTI_DS_CASSANDRA_CLUSTER
+      - CASSANDRA_DATACENTER: DS2
+      - CASSANDRA_RACK: RACK2
+      - CASSANDRA_HOST: cass-ds2-node2
+  cassandra-ds2-node3:
+    image: 'bitnami/cassandra:latest'
+    environment:
+      - CASSANDRA_CLUSTER_NAME: MULTI_DS_CASSANDRA_CLUSTER
+      - CASSANDRA_DATACENTER: DS2
+      - CASSANDRA_RACK: RACK2
+      - CASSANDRA_HOST: cass-ds2-node3
+
+  dsestudio:
+    image: jeremievallee/datastax-studio-docker:latest
+    ports:
+      - 9091:9091
+    container_name: dse-studio

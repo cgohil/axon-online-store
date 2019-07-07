@@ -1,0 +1,22 @@
+
+---
+version: '2'
+services:
+  product-catalogue:
+    image: 'product-catalogue-service:latest'
+    container_name: product-catalogue
+    hostname: product-catalogue
+    ports:
+      - "8080:8080"
+  order-command:
+    image: 'order-command-service:latest'
+    container_name: order-command
+    hostname: order-command
+    ports:
+      - "8081:8081"
+  order-query:
+    image: 'order-query-service:latest'
+    container_name: order-query
+    hostname: order-query
+    ports:
+      - "8082:8082"

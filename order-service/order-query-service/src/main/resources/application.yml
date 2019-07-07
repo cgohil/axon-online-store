@@ -1,0 +1,48 @@
+spring:
+  autoconfigure:
+    exclude: org.axonframework.springboot.autoconfig.JdbcAutoConfiguration
+  datasource:
+    url: jdbc:mariadb://mariadb-orders:3306/ORDERS_DATABASE
+    username: axon
+    password: axon
+    driver-class-name: 'org.mariadb.jdbc.Driver'
+    testWhileIdle: true
+    validationQuery: SELECT 1
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  output:
+    ansi:
+      enabled: always
+
+axon:
+  serializer:
+    general: jackson
+    messages: jackson
+    events: jackson
+  kafka:
+    bootstrap-servers: broker1:9092,broker2:9093
+    default-topic: domain-events-topic
+    consumer:
+      group-id: 'query-consumer'
+      bootstrap-servers: broker1:9092,broker2:9093
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      client-id: 'order-query-processor'
+  eventhandling:
+    processors:
+      "[OrderEventsProcessor]":
+        source: kafkaMessageSource
+        mode: TRACKING
+        threadCount: 1
+        batchSize: 1
+
+server:
+  port: 8082
+  servlet:
+    context-path: /
